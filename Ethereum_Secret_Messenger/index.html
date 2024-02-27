@@ -27,7 +27,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
-        async function initializeWeb3() {
+        // async function initializeWeb3() {
             // const Web3 = require('web3');
             // Connect a the web3 provider
             if (typeof web3 !== 'undefined') {
@@ -37,15 +37,15 @@
             }
 
             // Wait for the provider to be ready
-            await new Promise((resolve, reject) => {
-                web3.eth.net.getId((error, networkId) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(networkId);
-                }
-                });
-            });
+            // await new Promise((resolve, reject) => {
+            //     web3.eth.net.getId((error, networkId) => {
+            //     if (error) {
+            //         reject(error);
+            //     } else {
+            //         resolve(networkId);
+            //     }
+            //     });
+            // });
 
             // Set a default account
             // web3.eth.defaultAccount = await web3.eth.accounts[0];
@@ -107,8 +107,8 @@
 
                 console.log($("#userInput").val());
             });
-        }  
-        initializeWeb3();  
+        // }  
+        // initializeWeb3();  
 
     </script>
 </body>
