@@ -27,25 +27,26 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
-        // async function initializeWeb3() {
-            // const Web3 = require('web3');
+        async function initializeWeb3() {
+            
             // Connect a the web3 provider
             if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
             } else {
-                web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+                // web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+                web3 = new Web3(new Web3.providers.HttpProvider("https://sepolia.infura.io/v3/995b66a30a1f44b8985ef2640c667865"));
             }
 
             // Wait for the provider to be ready
-            // await new Promise((resolve, reject) => {
-            //     web3.eth.net.getId((error, networkId) => {
-            //     if (error) {
-            //         reject(error);
-            //     } else {
-            //         resolve(networkId);
-            //     }
-            //     });
-            // });
+            await new Promise((resolve, reject) => {
+                web3.eth.net.getId((error, networkId) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(networkId);
+                }
+                });
+            });
 
             // Set a default account
             // web3.eth.defaultAccount = await web3.eth.accounts[0];
@@ -90,14 +91,17 @@
                     "type": "function"
                 }
             ];
-
-            const contractAddress = '0x35F77861490cfC1477a8D99A38D460D319791F55';
-            const myMessage = new web3.eth.Contract(contractAbi, contractAddress, {from: web3.eth.defaultAccount});
+            
+            // on local
+            // const contractAddress = '0x35F77861490cfC1477a8D99A38D460D319791F55';
+            // on test network
+            const contractAddress = '0x7f6911D64Ff36Cc1743742d02AD40eF9C9548da7';
+            const myMessage = new web3.eth.Contract(contractAbi, contractAddress);
 
             console.log(myMessage);
 
             $("#setMessageButton").click(function () {
-                myMessage.methods.setMessage($("#userInput").val()).send({ from: web3.eth.defaultAccount })
+                myMessage.methods.setMessage($("#userInput").val()).send({ from: web3.eth.defaultAccount, gas: 3000000 })
                     .then(function (receipt) {
                         console.log(receipt);
                     })
@@ -107,8 +111,8 @@
 
                 console.log($("#userInput").val());
             });
-        // }  
-        // initializeWeb3();  
+        }  
+        initializeWeb3();  
 
     </script>
 </body>
